@@ -4,7 +4,7 @@ import CartContext from "./cart-context";
 const defaultCartState = {
     items: [],
     totalAmount: 0,
-}
+};
 
 const cartReducer = (prevState, action) => {
     if (action.type === "ADD") {
@@ -13,10 +13,10 @@ const cartReducer = (prevState, action) => {
         return {
             items: updateItems,
             totalAmount: updatedTotalAmount
-        }
+        };
     }
 
-    return defaultCartState
+    return defaultCartState;
 };
 
 
