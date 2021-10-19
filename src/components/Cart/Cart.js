@@ -4,6 +4,7 @@ import Modal from "../UI/Modal";
 import CartContext from "../../store/cart-context";
 import CartItem from "./CartItem";
 import Checkout from "./Checkout";
+import firebase_db from "../../secretkeys";
 
 const Cart = props => {
     const cartContext = useContext(CartContext);
@@ -21,6 +22,16 @@ const Cart = props => {
 
     const formButtonClickHandler = () => {
         setButtonIsClicked(true);
+    };
+
+    const submitOrderHandler = (userData) => {
+        fetch(firebase_db.users, {
+            method: "POST",
+            body: JSON.stringify({
+                user: userData,
+                orderItems: cartContext.items
+            })
+        });
     };
 
     const cartItems = (
@@ -42,7 +53,7 @@ const Cart = props => {
                 <span>Total Amount</span>
                 <span>{totalAmount}</span>
             </div>
-            {buttonIsClicked && <Checkout onCancel={props.onHideCart}/>}
+            {buttonIsClicked && <Checkout onConfirm={submitOrderHandler} onCancel={props.onHideCart}/>}
             {!buttonIsClicked && modalActions}
         </Modal>
     )
